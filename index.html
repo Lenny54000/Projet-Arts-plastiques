@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vidéo en Plein Écran</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none; /* Masquer la vidéo par défaut */
+        }
+        #error-message {
+            display: none; /* Masquer le message d'erreur par défaut */
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted>
+        <source src="mp4.mp4" type="video/mp4">
+        Votre navigateur ne supporte pas la vidéo.
+    </video>
+    <div id="error-message">Erreur : La vidéo est introuvable.</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.querySelector('video');
+            const errorMessage = document.getElementById('error-message');
+
+            video.addEventListener('loadeddata', function() {
+                video.requestFullscreen();
+                video.style.display = 'block'; // Afficher la vidéo lorsque elle est prête
+            });
+
+            video.addEventListener('ended', function() {
+                video.pause(); // Met la vidéo en pause à la fin
+            });
+
+            video.addEventListener('error', function() {
+                video.style.display = 'none'; // Masquer la vidéo en cas d'erreur
+                errorMessage.style.display = 'block'; // Afficher le message d'erreur
+            });
+        });
+    </script>
+</body>
+</html>
